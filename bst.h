@@ -353,29 +353,6 @@ BinarySearchTree<Key, Value>::iterator::operator++()
     // TODO
     current_ = successor(current_);
     return *this;
-    /*if (current_ == NULL) {
-        return *this;
-    }
-
-    if (current_->getRight() != NULL) {
-        current_ = current_->getRight();
-        while(current_->getLeft() != NULL) {
-            current_ = current_->getLeft();
-        }
-        return *this;
-    } else { //if no right child exists, we must go up until we find left child pointer
-        Node<Key, Value> *temp;
-        while (current_->getParent() != NULL) {
-            temp = current_;
-            current_ = current_->getParent();
-            if (current_->getLeft() == temp) { //if we just came from a left child, then we found our successor
-                return *this;
-            } 
-        }
-        current_ = NULL;
-        return *this;
-    }*/
-
 }
 
 
@@ -701,34 +678,7 @@ void BinarySearchTree<Key, Value>::clear()
 {
     clearHelper(root_);
     root_ = NULL;
-    /* TODO
-    if (root_ == NULL) {
-        return;
-    }
-    Node<Key, Value>* traverser = root_;
-    Node<Key, Value>* temp = root_;
-    while (traverser->getLeft() != NULL || traverser->getRight() != NULL) { //as long as a child exists
-        while (traverser != NULL) { //find next leaf
-            if (traverser->getLeft() != NULL) {
-                traverser = traverser->getLeft();
-            } else if (traverser->getRight() != NULL) {
-                traverser = traverser->getRight();
-            } else {
-                break; //leaf found
-            }
-        }
-        temp = traverser;
-        traverser = traverser->getParent();
-        if (traverser->getLeft() == temp) {
-            traverser->setLeft(NULL);
-        } else if (traverser->getRight() == temp) {
-            traverser->setRight(NULL);
-        }
-        delete temp;
-    }
-    delete traverser;
-    root_ = NULL;
-    */
+    // TODO
 }
 
 
