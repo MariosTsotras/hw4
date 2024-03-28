@@ -253,7 +253,7 @@ protected:
 
     int height(Node<Key,Value>* root) const;
     bool isBalancedHelper(Node<Key,Value>* root) const;
-    void clearHelper(Node<Key,Value>* root);
+    void clearHelper(Node<Key,Value>* n);
 
     static Node<Key, Value>* successor(Node<Key, Value>* current);
 
@@ -645,26 +645,28 @@ BinarySearchTree<Key, Value>::predecessor(Node<Key, Value>* current)
 }
 
 template<typename Key, typename Value>
-void BinarySearchTree<Key, Value>::clearHelper(Node<Key,Value>* root) {
-    if (root == NULL) {
+void BinarySearchTree<Key, Value>::clearHelper(Node<Key,Value>* n) {
+    if (n == NULL) {
         return;
     }
-    if (root->getLeft() == NULL && root->getRight() == NULL) {
-        if (root->getParent() != NULL) {
-            if (root->getParent()->getLeft() == root) {
-                root->getParent()->setLeft(NULL);
-            } else if (root->getParent()->getRight() == root) {
-                root->getParent()->setRight(NULL);
+    if (n->getLeft() == NULL && n->getRight() == NULL) { //if no children
+        if (n->getParent() != NULL) {  // if parent exists
+            if (n->getParent()->getLeft() == n) { //if n is a left child of its parent
+                n->getParent()->setLeft(NULL); //set parent's left to NULL
+            } else if (n->getParent()->getRight() == n) { //if n is a right child of its parent
+                n->getParent()->setRight(NULL); //set parent's right to NULL
             }
         }
-        delete root;
+        delete n;
         return;
-    } else {
-        if (root->getLeft() != NULL) {
-            clearHelper(root->getLeft());
+    } else { //n has children so n is not a leaf node yet
+        if (n->getLeft() != NULL) {
+            clearHelper(n->getLeft());
+            clearHelper(n);
         }
-        if (root->getRight() != NULL) {
-            clearHelper(root->getRight());
+        else if (n->getRight() != NULL) {
+            clearHelper(n->getRight());
+            clearHelper(n);
         }
     }
 }
